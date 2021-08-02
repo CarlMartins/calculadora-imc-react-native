@@ -35,7 +35,12 @@ const Main = () => {
           Lista de Leitura
         </Text>
         <TouchableOpacity style={styles.toolboxButton}>
-          <Icon name="add" style={styles.icon} />
+          <Icon
+            name="add"
+            style={styles.icon}
+            color="#fff"
+            size={14}
+          />
         </TouchableOpacity>
       </View>
       <FlatList
@@ -68,10 +73,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50
-  },
-  icon: {
-    fontSize: 14,
-    color: '#fff'
   },
   title: {
     fontSize: 16,
