@@ -20,15 +20,3 @@ const AppContainer = createAppContainer(RootStack);
 export {
   AppContainer
 };
-
-
-// createSwitchNavigator(
-//   {
-//     Main,
-//     Book
-//   },
-//   {
-//     initialRouteName: "Main",
-//     backBehavior: "history"
-//   }
-// )

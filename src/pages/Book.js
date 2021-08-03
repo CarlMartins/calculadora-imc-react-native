@@ -1,49 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Book = ({ navigation }) => {
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [photo, setPhoto] = useState();
+
+  const isValid = () => {
+    if ((title !== undefined) && (title !== '')) {
+      return true;
+    }
+    return false;
+  };
+
+  const onSave = () => {
+    alert(`Title: ${ title } / Description: ${ description }`);
+    if (isValid()) {
+      alert('Valido!');
+    } else {
+      alert('Dados invalidos, preencha todos os campos!');
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.pageTitle}>
+    <View style={ styles.container }>
+      <Text style={ styles.pageTitle }>
         Inclua seu novo livro...
       </Text>
       <TextInput
         placeholder="Título"
-        style={styles.input}
+        style={ styles.input }
+        value={ title }
+        onChangeText={ (text) => { setTitle(text); } }
       />
       <TextInput
         placeholder="Descrição"
-        style={styles.input}
-        multiline={true}
-        numberOfLines={4}
+        style={ styles.input }
+        multiline={ true }
+        numberOfLines={ 4 }
+        value={ description }
+        onChangeText={ (text) => setDescription(text) }
       />
 
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.cameraButton}>
+      <View style={ styles.buttonsContainer }>
+        <TouchableOpacity style={ styles.cameraButton }>
           <Icon
             name="photo-camera"
-            style={styles.icon}
-            size={18}
+            style={ styles.icon }
+            size={ 18 }
             color="#fff"
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>Cadastrar</Text>
+        <TouchableOpacity
+          style={ [styles.saveButton, (!isValid()) ? styles.saveButtonInvalid : ''] }
+          onPress={ onSave }
+        >
+          <Text style={ styles.saveButtonText } >
+            Cadastrar</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.cancelButton}
-          onPress={() => navigation.goBack()}
+          style={ styles.cancelButton }
+          onPress={ () => navigation.goBack() }
         >
-          <Text style={styles.cancelButtonText}>Cancelar</Text>
+          <Text style={ styles.cancelButtonText }>Cancelar</Text>
         </TouchableOpacity>
       </View>
 
-    </View>
+    </View >
   );
 };
 
@@ -81,6 +109,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: 16,
     marginBottom: 20
+  },
+  saveButtonInvalid: {
+    opacity: 0.5
   },
   saveButtonText: {
     color: '#fff'
