@@ -18,8 +18,7 @@ const Main = ({ navigation }) => {
     AsyncStorage.getItem('books')
       .then(data => {
         const book = JSON.parse(data);
-        console.log(data);
-        setBooks([book]);
+        setBooks(book);
       });
   }, []);
 
