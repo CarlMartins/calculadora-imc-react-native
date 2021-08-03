@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  AsyncStorage
+} from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -16,10 +23,19 @@ const Book = ({ navigation }) => {
     return false;
   };
 
-  const onSave = () => {
-    alert(`Title: ${ title } / Description: ${ description }`);
+  const onSave = async () => {
     if (isValid()) {
-      alert('Valido!');
+
+      const id = 1;
+      const data = {
+        id,
+        title,
+        description,
+        photo
+      };
+
+      await AsyncStorage.setItem('books', JSON.stringify(data));
+      navigation.goBack();
     } else {
       alert('Dados invalidos, preencha todos os campos!');
     }
