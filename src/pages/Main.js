@@ -22,6 +22,15 @@ const Main = ({ navigation }) => {
       });
   }, []);
 
+  const onNewBook = () => {
+    navigation.navigate('Book');
+  };
+
+  const onBookEdit = (bookId) => {
+    const book = books.find(item => item.id === bookId);
+    navigation.navigate('Book', { book: book, isEdit: true });
+  };
+
   return (
     <View style={ styles.container }>
       <View style={ styles.toolBox }>
@@ -30,7 +39,7 @@ const Main = ({ navigation }) => {
         </Text>
         <TouchableOpacity
           style={ styles.toolboxButton }
-          onPress={ () => navigation.navigate("Book") }
+          onPress={ onNewBook }
         >
           <Icon
             name="add"
@@ -43,11 +52,27 @@ const Main = ({ navigation }) => {
       <FlatList
         data={ books }
         keyExtractor={ item => item.id }
-        renderItem={ ({ item }) =>
-          <TouchableOpacity style={ styles.itemButton }>
-            <Text style={ styles.itemText }>{ item.title }</Text>
-          </TouchableOpacity> }
+        renderItem={ ({ item }) => (
+          <View style={ styles.itemsContainer }>
+            <TouchableOpacity style={ styles.itemButton }>
+              <Text style={ styles.itemText }>{ item.title }</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={ styles.editButton }
+              onPress={ () => onBookEdit(item.id) }
+            >
+              <Icon
+                name="create"
+                style={ styles.icon }
+                color="#2ecc71"
+                size={ 14 }
+              />
+            </TouchableOpacity>
+          </View>
+        ) }
       />
+
     </View>
   );
 };
@@ -79,8 +104,15 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   itemButton: {
+    flex: 1
+  },
+  editButton: {
 
-  }
+  },
+  itemsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
 });
 
 export {
