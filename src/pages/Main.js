@@ -31,6 +31,13 @@ const Main = ({ navigation }) => {
     navigation.navigate('Book', { book: book, isEdit: true });
   };
 
+  const onBookDelete = async (bookId) => {
+    const newBooks = books.filter(item => item.id !== bookId);
+    await AsyncStorage.setItem("books", JSON.stringify(newBooks));
+
+    setBooks(newBooks);
+  };
+
   return (
     <View style={ styles.container }>
       <View style={ styles.toolBox }>
@@ -66,6 +73,18 @@ const Main = ({ navigation }) => {
                 name="create"
                 style={ styles.icon }
                 color="#2ecc71"
+                size={ 14 }
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={ styles.deleteButton }
+              onPress={ () => onBookDelete(item.id) }
+            >
+              <Icon
+                name="delete"
+                style={ styles.icon }
+                color="#e74c3c"
                 size={ 14 }
               />
             </TouchableOpacity>
@@ -112,6 +131,9 @@ const styles = StyleSheet.create({
   itemsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  deleteButton: {
+
   },
 });
 
